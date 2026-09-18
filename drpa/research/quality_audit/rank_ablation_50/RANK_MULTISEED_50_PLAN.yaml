@@ -1,0 +1,31 @@
+study: RANK_MULTISEED_50
+status: MULTISEED_BLOCKED_WAITING_FOR_USER_SEED_FREEZE
+purpose: Validate rank-8 versus rank-16 across three fixed seeds at 50% data.
+reused_seed:
+  seed: 20260809
+  r8_artifact: rank8_hardened_batch1_step0
+  r16_artifact: rank16_hardened_batch1_step0
+jobs:
+  - {seed_name: seed2, seed: null, rank: 8, status: BLOCKED_WAITING_FOR_USER_SEED_FREEZE}
+  - {seed_name: seed2, seed: null, rank: 16, status: BLOCKED_WAITING_FOR_USER_SEED_FREEZE}
+  - {seed_name: seed3, seed: null, rank: 8, status: BLOCKED_WAITING_FOR_USER_SEED_FREEZE}
+  - {seed_name: seed3, seed: null, rank: 16, status: BLOCKED_WAITING_FOR_USER_SEED_FREEZE}
+frozen_protocol:
+  train_ptids: 169
+  train_visits: 461
+  batch_size: 1
+  optimizer_steps: 6000
+  amp_forward: true
+  loss: FP32 Dice+BCE
+  cross_attention_lora_rank: 4
+  decoder_stages_trainable: true
+  data_pipeline: BEST_BATCH1_PIPELINE
+  data_source: DISK_CACHE
+  num_workers: 32
+  prefetch_factor: 2
+  evaluator_lcc: 0
+forbidden:
+  - rank32
+  - r4_multiseed
+  - new_adapter_loss_or_readout
+  - automatic_seed_generation

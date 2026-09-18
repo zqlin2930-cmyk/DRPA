@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "created_utc": "2026-09-18T03:59:45.627859+00:00",
+  "release": "DRPA0.1.0",
+  "collected_source_config_files": 188,
+  "collected_python_files": 128,
+  "local_packaging_tests": {
+    "passed": 6,
+    "platform": "macOS",
+    "python": "3.14"
+  },
+  "server_test_suite": {
+    "passed": 8,
+    "platform": "Linux",
+    "python": "3.12.3",
+    "duration_sec": 12.886
+  },
+  "nested_scientific_checks": {
+    "original_plateau_tests_passed": 10,
+    "distance_metric_edge_cases_exact": 26,
+    "adapter_initial_zero_update": true,
+    "adapter_nonzero_trainable_gradient": true,
+    "cuda_initialized_by_science_test": false
+  },
+  "static_import_names_unresolved": [],
+  "upstream_voxtell_source_hashes_preserved": true,
+  "source_inventory_verification": "PASS",
+  "wheel_built_and_isolated_inspect_passed": true,
+  "wheel_verified_source_files": 188,
+  "privacy_artifact_pattern_scan": "PASS; selected patterns only, not universal secret detection",
+  "original_active_experiment_source_hashes_unchanged": true,
+  "full_relocated_gpu_training_performed": false,
+  "included": "Source code, public/sanitized configuration, dependency records, attribution, usage instructions and tests",
+  "excluded": [
+    "patient images",
+    "ground-truth volumes",
+    "real case manifests",
+    "case-level results",
+    "trained checkpoints",
+    "embedding arrays",
+    "runtime logs",
+    "credentials",
+    "Git history",
+    "agent/session instructions"
+  ],
+  "source_transformations": "See drpa/source_inventory.json for original/distributed hashes and per-file changes",
+  "licensing": "Upstream license retained; no new project-wide open-source grant selected",
+  "limitations": [
+    "Historical experiments may require private manifests/checkpoints/provenance receipts.",
+    "Fresh convergence queue is source- and component-validated, not end-to-end GPU retrained during packaging.",
+    "Only source from the selected available author workspace was collected."
+  ]
+}

@@ -1,0 +1,5 @@
+model,configured_trainable_params,forward_reachable_params,loss_gradient_active_params,total_model_params,configured_ratio_vs_fullft,fullft_to_model_configured_ratio,parameter_count_contract,notes
+B1,294912,294912,294912,440324453,0.00067021,1492.0651,unique configured trainable,rank-4 cross-attention LoRA only
+DRPA-8,10969696,10969696,10969696,440767077,0.02492945,40.1132,unique configured trainable,LoRA plus rank-8 projection adapters plus decoder stages
+B3-Canonical,81930624,81930624,81930624,440324453,0.18619346,5.3708,unique configured trainable,LoRA plus full projection fine-tuning plus decoder stages
+VoxTell-FullFT,440029541,339292452,339291552,440029541,1.00000000,1.0000,unique configured trainable,Qwen excluded and frozen

@@ -1,0 +1,119 @@
+version: 1
+name: two_card_paper_experiment_supervisor
+completion_policy: artifact_gated_not_pid_only
+global_guards:
+  forbid_retrain: [P0, P1, P3]
+  max_convergence_step: 9000
+  forbid_fullft_continuation: true
+  forbid_new_architecture: true
+  forbid_new_loss_or_prompt: true
+  forbid_oasis_auto_test: true
+  max_rank: 16
+  seed_list_generation: forbidden
+  auto_protocol_mutation: forbidden
+hosts:
+  rtx4090:
+    ssh_target: PRIVATE_COMPUTE_HOST
+    ssh_port: 30242
+    project_root: __DRPA_WORKSPACE__
+  rtx_pro6000:
+    ssh_target: PRIVATE_COMPUTE_HOST
+    ssh_port: 14043
+    project_root: __DRPA_WORKSPACE__
+nodes:
+  - id: P0_B1_50
+    host: rtx4090
+    status_expected: REUSED
+    artifact_paths:
+      - quality_audit/placement_ablation_50/../drpa_data_capacity_scaling/runs/50pct_b1
+    provenance_paths:
+      - quality_audit/placement_ablation_50/PLACEMENT_50_PROTOCOL.md
+    forbidden_action: retrain
+  - id: P1_B1_PROJECTION_50
+    host: rtx_pro6000
+    status_expected: REUSED
+    artifact_paths:
+      - quality_audit/placement_ablation_50/p1_b1_projection/PLACEMENT_P1_FINAL_METRICS.csv
+      - quality_audit/placement_ablation_50/p1_b1_projection/validation_rows_step_06000.csv
+    forbidden_action: retrain
+  - id: P2_B1_DECODER_50
+    host: rtx_pro6000
+    status_expected: RUNNING
+    pid_path: quality_audit/placement_ablation_50/p2_b1_decoder/pid
+    expected_cmd_substring: placement_runner.py --kind b1_decoder --subset 50pct
+    completion_artifacts:
+      - quality_audit/placement_ablation_50/p2_b1_decoder/validation_summary_step_06000.csv
+      - quality_audit/placement_ablation_50/p2_b1_decoder/validation_rows_step_06000.csv
+      - quality_audit/placement_ablation_50/p2_b1_decoder/run_summary.json
+    protocol:
+      trainable_parameters: 10527072
+      train_visits: 461
+      train_ptids: 169
+      max_optimizer_steps: 6000
+      amp_forward: true
+  - id: P3_DRPA_50
+    host: rtx4090
+    status_expected: REUSED
+    artifact_paths:
+      - quality_audit/placement_ablation_50/../drpa_data_capacity_scaling/runs/50pct_drpa8
+    provenance_paths:
+      - quality_audit/placement_ablation_50/PLACEMENT_50_PROTOCOL.md
+    forbidden_action: retrain
+  - id: DRPA100_CONVERGENCE_9000
+    host: rtx4090
+    status_expected: RUNNING
+    pid_path: quality_audit/voxtell_mtl_drpa8_full_data/formal_training/convergence_extension_7500_9000_20260906/launcher.pid
+    expected_cmd_substring: drpa100_convergence_extension_7500_9000.py
+    completion_artifacts:
+      - quality_audit/voxtell_mtl_drpa8_full_data/formal_training/convergence_extension_7500_9000_20260906/checkpoints/step_09000.pt
+      - quality_audit/voxtell_mtl_drpa8_full_data/formal_training/convergence_extension_7500_9000_20260906/launcher.log
+    protocol:
+      trainable_parameters: 10969696
+      max_optimizer_steps: 9000
+      amp_forward: true
+  - id: PLACEMENT_UNIFIED_COMPARISON
+    host: rtx_pro6000
+    depends_on: [P0_B1_50, P1_B1_PROJECTION_50, P2_B1_DECODER_50, P3_DRPA_50]
+    action: report_only
+    status_expected: WAITING
+    output_paths:
+      - quality_audit/placement_ablation_50/PLACEMENT_UNIFIED_COMPARISON.csv
+      - quality_audit/placement_ablation_50/PLACEMENT_UNIFIED_COMPARISON.md
+  - id: RANK_ABLATION_50
+    host: rtx_pro6000
+    depends_on: [PLACEMENT_UNIFIED_COMPARISON]
+    action: requires_existing_validated_entrypoint
+    status_expected: WAITING_FOR_ENTRYPOINT
+    constraints:
+      ranks: [4, 8, 16]
+      rank8: reuse_P3_DRPA_50
+      no_rank_above: 16
+  - id: SAME_GPU_RESOURCE_BENCHMARK
+    host: rtx_pro6000
+    depends_on: [RANK_ABLATION_50]
+    action: quality_audit/same_gpu_resource_benchmark.py
+    status_expected: WAITING
+    constraints:
+      validation: false
+      precision: FP32
+      input: 192x192x192
+      batch_size: 1
+  - id: B3_100_CONVERGENCE_9000
+    host: rtx4090
+    depends_on: [DRPA100_CONVERGENCE_9000]
+    action: requires_existing_resume_entrypoint
+    status_expected: WAITING_FOR_ENTRYPOINT
+    constraints:
+      max_optimizer_steps: 9000
+      parameter_count: 81930624
+      precision: FP32
+  - id: MULTISEED_10_50
+    host: rtx4090
+    depends_on: [B3_100_CONVERGENCE_9000]
+    action: manual_authorization_and_frozen_seed_list
+    status_expected: WAITING_FOR_FROZEN_SEED_LIST
+    constraints:
+      data_fractions: [10pct, 50pct]
+      models: [DRPA-8, B3-Canonical]
+      total_seeds: 3
+      forbid_auto_seed_generation: true

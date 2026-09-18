@@ -1,0 +1,16 @@
+{
+  "canonical_evaluator_source": "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_drpa8_pilot/evaluate_drpa8.py",
+  "checkpoint": "__DRPA_WORKSPACE__/VoxTell_weights/voxtell_v1.1/fold_0/checkpoint_final.pth",
+  "checkpoint_bytes": 1774589029,
+  "checkpoint_sha256": "f45e61c34c56af7b71711a6de54e8414dbc4cb52441003894f3370ed68d8feaa",
+  "experiment": "VOXTELL_FROZEN_CANONICAL_BASELINE",
+  "inference_mode": "torch.inference_mode + canonical CUDA autocast FP16",
+  "model": "VoxTell-Frozen-Canonical",
+  "no_training_or_parameter_update": true,
+  "threshold": ">= 0.5",
+  "trainable_params": 0,
+  "validation_manifest": "__DRPA_WORKSPACE__/quality_audit/drpa_data_capacity_scaling/manifests/val_100pct_frozen.csv",
+  "validation_manifest_sha256": "ef27630cddb3546e9ec50fb131b81a2de0b6115700764ab3e853f9c295656dcf",
+  "validation_ptids": 85,
+  "validation_visits": 247
+}

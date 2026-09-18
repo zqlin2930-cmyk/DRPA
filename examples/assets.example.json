@@ -1,0 +1,14 @@
+{
+  "roots": {
+    "data_root": "/absolute/path/to/your/private_data",
+    "oasis_root": "/absolute/path/to/your/OASIS_TRT20"
+  },
+  "links": {
+    "VoxTell_weights/voxtell_v1.1": "/absolute/path/to/voxtell_v1.1",
+    "VoxTell_weights/embeddings/voxtell_v1.1/text_embeddings.npz": "/absolute/path/to/text_embeddings.npz",
+    "quality_audit/voxtell_mtl_drpa8_full_data/full_data_train_cases.csv": "/absolute/path/to/train.csv",
+    "quality_audit/voxtell_mtl_drpa8_full_data/full_data_val_cases.csv": "/absolute/path/to/val.csv",
+    "quality_audit/drpa_data_capacity_scaling/manifests/train_100pct.csv": "/absolute/path/to/train.csv",
+    "quality_audit/drpa_data_capacity_scaling/manifests/val_100pct_frozen.csv": "/absolute/path/to/val.csv"
+  }
+}

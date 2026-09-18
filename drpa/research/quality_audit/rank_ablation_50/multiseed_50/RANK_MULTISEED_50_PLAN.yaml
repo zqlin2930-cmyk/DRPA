@@ -1,0 +1,39 @@
+study: RANK_MULTISEED_50
+status: MULTISEED_SEEDS_FROZEN
+purpose: Three-seed sensitivity comparison of Projection rank 8 versus 16 at 50% data.
+seeds:
+  seed1: 20260809
+  seed2: 3407
+  seed3: 2026
+reuse:
+  - {seed: 20260809, rank: 8, artifact: rank8_hardened_batch1_step0}
+  - {seed: 20260809, rank: 16, artifact: rank16_hardened_batch1_step0}
+new_serial_jobs:
+  - {seed: 3407, rank: 8}
+  - {seed: 3407, rank: 16}
+  - {seed: 2026, rank: 8}
+  - {seed: 2026, rank: 16}
+frozen_protocol:
+  train_ptids: 169
+  train_visits: 461
+  validation_ptids: 85
+  validation_visits: 247
+  batch_size: 1
+  optimizer_steps: 6000
+  amp_forward: true
+  loss: FP32 Dice+BCE
+  grad_scaler: true
+  cross_attention_lora_rank: 4
+  decoder_stages_trainable: true
+  data_pipeline: BEST_BATCH1_PIPELINE
+  data_source: DISK_CACHE
+  num_workers: 32
+  prefetch_factor: 2
+  evaluator_lcc: 0
+  sample_order_contract: np.random.default_rng(seed + epoch).permutation(train_len)
+forbidden:
+  - rank32
+  - r4_multiseed
+  - new_adapter_loss_or_readout
+  - early_stopping
+  - replacement_of_low_performance_seed

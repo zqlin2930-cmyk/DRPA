@@ -1,0 +1,48 @@
+{
+  "model": "VoxTell-FullFT",
+  "seed": 20260809,
+  "batch_size": 1,
+  "max_updates": 12000,
+  "required_steps": [
+    0,
+    1500,
+    3000,
+    4500,
+    6000,
+    7500,
+    9000,
+    10500,
+    12000
+  ],
+  "train_ptids": 337,
+  "train_visits": 971,
+  "val_ptids": 85,
+  "val_visits": 247,
+  "overlap": 0,
+  "precision": "FP32_no_training_autocast_no_gradscaler",
+  "activation_checkpointing": false,
+  "matmul_allow_tf32": false,
+  "cudnn_allow_tf32": true,
+  "backend_precision_policy": "Preserve original formal-runner backend defaults; no TF32 override was present in those training sources",
+  "optimizer": "AdamW",
+  "weight_decay": 1e-05,
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "eps": 1e-08,
+  "gradient_clip": 1.0,
+  "scheduler": null,
+  "initialization": "__DRPA_WORKSPACE__/VoxTell_weights/voxtell_v1.1/fold_0/checkpoint_final.pth",
+  "initialization_sha256": "f45e61c34c56af7b71711a6de54e8414dbc4cb52441003894f3370ed68d8feaa",
+  "trainable_parameters": 440029541,
+  "data_cache_cases": false,
+  "num_workers": 0,
+  "data_order": "np.random.default_rng(20260809 + epoch).permutation(971), epoch starts at1",
+  "evaluator": "original grouped FP16 inference; FP32 sigmoid; >=0.5; LCC0; physical spacing",
+  "aggregation": "canonical visit-by-ROI macro mean; undefined HD95 retained and counted; pandas skip-NaN matches original",
+  "scientific_scope": "single-seed convergence sensitivity, no selection/early stop",
+  "learning_rates": {
+    "segmentation_network": 1e-05
+  }
+}

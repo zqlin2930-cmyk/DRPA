@@ -1,0 +1,5 @@
+# Only for the upstream VoxTell visualization/server entrypoints.
+napari
+fastapi
+uvicorn[standard]
+blosc2

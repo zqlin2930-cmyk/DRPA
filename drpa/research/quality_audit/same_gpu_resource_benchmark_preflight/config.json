@@ -1,0 +1,17 @@
+{
+  "seed": 20260809,
+  "gpu": "RTX PRO 6000",
+  "input": "192x192x192",
+  "batch_size": 1,
+  "precision": "FP32",
+  "warmup_steps": 1,
+  "measured_steps": 1,
+  "same_case": "PRIVATE_SUBJECT_001_bl_CN",
+  "model_order": [
+    "B1",
+    "DRPA-8",
+    "B3-Canonical",
+    "FullFT"
+  ],
+  "no_validation": true
+}

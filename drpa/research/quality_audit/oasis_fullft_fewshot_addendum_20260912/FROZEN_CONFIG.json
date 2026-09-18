@@ -1,0 +1,51 @@
+{
+  "seed": 20260809,
+  "support": 5,
+  "query": 15,
+  "steps": 500,
+  "batch_size": 1,
+  "train_precision": "strict_FP32",
+  "autocast": false,
+  "GradScaler": false,
+  "train_TF32": false,
+  "lr": 1e-05,
+  "weight_decay": 1e-05,
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "eps": 1e-08,
+  "scheduler": null,
+  "clip_norm": 1.0,
+  "initialization": "canonical_ADNI100_step6000",
+  "optimizer_state": "fresh_target_domain_adaptation",
+  "models": {
+    "FullFT": 440029541
+  },
+  "prompt_reduction": "8 separate prompt Dice+BCE losses; each /8 backward; one optimizer update",
+  "augmentation": "none; unchanged canonical deterministic dataset",
+  "preprocessing": "native_NIfTI_original_VoxTell_reader_reference_assisted_crop_and_normalization",
+  "use_nnunet_v1_stage0": false,
+  "cache_cases": false,
+  "num_workers": 0,
+  "evaluation": "original_grouped_FP16_forward_FP32_sigmoid",
+  "threshold": ">=0.5",
+  "lcc": 0,
+  "query_selection": false,
+  "endpoint": 500,
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 20260809,
+  "query_status": "adaptation-held-out with prior frozen-evaluation exposure",
+  "minimum_free_GiB": 20,
+  "prompts": [
+    "right hippocampus",
+    "left hippocampus",
+    "right entorhinal cortex",
+    "left entorhinal cortex",
+    "right parahippocampal gyrus",
+    "left parahippocampal gyrus",
+    "right amygdala",
+    "left amygdala"
+  ],
+  "loss_source": "def loss_fp32(logits: torch.Tensor, target: torch.Tensor):\n    z = logits.float()\n    y = target.float()\n    bce = F.binary_cross_entropy_with_logits(z, y)\n    p = torch.sigmoid(z)\n    dims = tuple(range(2, p.ndim))\n    inter = (p * y).sum(dims)\n    den = p.sum(dims) + y.sum(dims)\n    dice_loss = 1.0 - ((2 * inter + 1e-5) / (den + 1e-5)).mean()\n    return dice_loss + bce, dice_loss, bce"
+}

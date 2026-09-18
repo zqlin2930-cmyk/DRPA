@@ -1,0 +1,28 @@
+{
+  "experiment": "PLACEMENT_ABLATION_50_AMP_MATCHED",
+  "model": "b1_decoder",
+  "subset": "50pct",
+  "seed": 20260809,
+  "max_optimizer_steps": 6000,
+  "train_visits": 461,
+  "train_ptids": 169,
+  "val_visits": 247,
+  "val_ptids": 85,
+  "batch_size": 1,
+  "gradient_accumulation": 1,
+  "preprocessing": "canonical RAS + official reader-space + fixed bilateral 192^3 crop",
+  "prompts": "8 fixed canonical prompts",
+  "loss": "FP32 Dice+BCE",
+  "amp_forward": true,
+  "autocast_dtype": "float16",
+  "grad_scaler": true,
+  "clip_norm": 1.0,
+  "weight_decay": 1e-05,
+  "parameter_groups": {
+    "decoder_stages": 10232160,
+    "cross_attention_lora": 294912
+  },
+  "trainable_parameters": 10527072,
+  "train_manifest_sha256": "0204f74426531a5c61705750eeb45c519fac237d0e7f4657220101f8c84c752a",
+  "val_manifest_sha256": "ef27630cddb3546e9ec50fb131b81a2de0b6115700764ab3e853f9c295656dcf"
+}

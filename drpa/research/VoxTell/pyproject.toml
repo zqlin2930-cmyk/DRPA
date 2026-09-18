@@ -1,0 +1,90 @@
+[project]
+name = "voxtell"
+version = "0.1.1"
+requires-python = ">=3.10"
+description = "Free-Text Promptable Universal 3D Medical Image Segmentation"
+readme = "readme.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Maximilian Rokuss", email = "maximilian.rokuss@dkfz-heidelberg.de"},
+    { name = "Moritz Langenberg", email = "moritz.langenberg@dkfz-heidelberg.de"},
+    { name = "Yannick Kirchhoff" },
+    { name = "Fabian Isensee" },
+    { name = "Benjamin Hamm" },
+    { name = "Constantin Ulrich" },
+    { name = "Sebastian Regnery" },
+    { name = "Lukas Bauer" },
+    { name = "Efthimios Katsigiannopulos" },
+    { name = "Tobias Norajitra" },
+    { name = "Klaus Maier-Hein" }
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Healthcare Industry",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+keywords = [
+    'deep learning',
+    'image segmentation',
+    'semantic segmentation',
+    'medical image analysis',
+    'medical image segmentation',
+    'vision-language model',
+    'text-prompted segmentation',
+    '3D segmentation',
+    'volumetric segmentation'
+]
+dependencies = [
+    "torch>=2.0,<2.9",
+    "nnunetv2>=2.6",
+    "acvl-utils>=0.2.3,<0.3",
+    "dynamic-network-architectures>=0.4.1,<0.5",
+    "numpy>=1.24",
+    "SimpleITK",
+    "nibabel",
+    "positional-encodings",
+    "einops",
+    "tqdm",
+    "transformers>=4.54.0,<5",
+    "huggingface_hub",
+]
+
+[project.urls]
+repository = "https://github.com/MIC-DKFZ/VoxTell"
+paper = "https://arxiv.org/abs/2511.11450"
+
+[project.scripts]
+voxtell-predict = "voxtell.inference.predict_from_raw_data:main"
+voxtell-finetune = "voxtell.training.run_finetuning:main"
+voxtell-server = "voxtell.server.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ruff",
+    "pre-commit"
+]
+server = [
+    "fastapi",
+    "uvicorn[standard]",
+    "blosc2",
+]
+
+[build-system]
+requires = ["setuptools>=67.8.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg,*.png'
+#
+# ignore-words-list = ''
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["voxtell*"]

@@ -1,0 +1,18 @@
+{
+  "mode": "full_volume",
+  "patch_size": [
+    192,
+    192,
+    192
+  ],
+  "center_fraction": [
+    0.4981994570579817,
+    0.486960011560498,
+    0.4828266722695381
+  ],
+  "derived_from": "50 train PTID MALPEM labels; normalized canonical-RAS centroid median",
+  "target_spacing_mm": null,
+  "image_interpolation": "continuous_order_1_when_resampled",
+  "label_interpolation": "nearest_neighbor_order_0_only",
+  "margin_policy": "fixed 192^3 model input; training-derived center; zero padding outside source"
+}

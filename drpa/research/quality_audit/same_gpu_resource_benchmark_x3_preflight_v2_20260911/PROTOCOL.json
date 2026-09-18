@@ -1,0 +1,102 @@
+{
+  "status": "PREFLIGHT_PASS",
+  "seed": 20260809,
+  "models": [
+    "B1",
+    "DRPA-8",
+    "B3-Canonical",
+    "FullFT"
+  ],
+  "expected_parameters": {
+    "B1": 294912,
+    "DRPA-8": 10969696,
+    "B3-Canonical": 81930624,
+    "FullFT": 440029541
+  },
+  "warmup": 20,
+  "measured": 100,
+  "repeats": 3,
+  "batch": 1,
+  "input_shape": [
+    1,
+    1,
+    192,
+    192,
+    192
+  ],
+  "precision": "strict_FP32",
+  "autocast": false,
+  "grad_scaler": false,
+  "tf32": false,
+  "optimizer": {
+    "name": "AdamW",
+    "lr": 1e-05,
+    "weight_decay": 1e-05,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "foreach": null,
+    "fused": null
+  },
+  "seed_semantics": "fresh process and canonical initialization, same seed each repeat; repeats measure runtime not scientific seed variation",
+  "step_definition": "one visit, eight prompt-wise forward/loss/backward passes; average gradient then one AdamW step",
+  "data_loader": {
+    "num_workers": 0,
+    "batch_size": 1,
+    "pin_memory": true,
+    "shuffle": false,
+    "drop_last": false
+  },
+  "data_source": "REPEATED_FIXED_PREPROCESSED_CPU_TENSOR",
+  "preprocessing_timed": false,
+  "h2d": "one float32 image and eight masks per update; non_blocking=True",
+  "checkpointing": {
+    "B1": "unchanged official forward",
+    "DRPA-8": "existing decoder checkpoint",
+    "B3-Canonical": "existing decoder checkpoint",
+    "FullFT": "no checkpointing"
+  },
+  "qwen": "not loaded; frozen precomputed canonical text embeddings; GPU text embeddings preloaded before warmup",
+  "optional_text_cache_exists": false,
+  "all_prompts_available_in_existing_bank": true,
+  "train_manifest": "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_drpa8_full_data/full_data_train_cases.csv",
+  "case_id": "PRIVATE_SUBJECT_001_bl_CN",
+  "ptid": "PRIVATE_SUBJECT_001",
+  "prompts": [
+    "right hippocampus",
+    "left hippocampus",
+    "right entorhinal cortex",
+    "left entorhinal cortex",
+    "right parahippocampal gyrus",
+    "left parahippocampal gyrus",
+    "right amygdala",
+    "left amygdala"
+  ],
+  "tensor_sha256": {
+    "image": "39c6b0a8584cb4211ecb16bef608d9b7698aa30743c74ff882179a93bc5a7567",
+    "mask": "4a2a362decde8302ee0484c46db459e7e6f9d07f9c3ae4c32636d090318df85e"
+  },
+  "torch": "2.8.0+cu128",
+  "numpy": "2.4.6",
+  "cuda": "12.8",
+  "source_sha256": {
+    "__DRPA_WORKSPACE__/VoxTell_weights/voxtell_v1.1/fold_0/checkpoint_final.pth": "f45e61c34c56af7b71711a6de54e8414dbc4cb52441003894f3370ed68d8feaa",
+    "__DRPA_WORKSPACE__/VoxTell_weights/voxtell_v1.1/plans.json": "d94ce4eeb9ef067eb10a92aad1b7342e568c44cc23f261013632db3c13b2c4fc",
+    "__DRPA_WORKSPACE__/VoxTell_weights/embeddings/voxtell_v1.1/text_embeddings.npz": "65bdee9bcd4eb58d909d7b38701bf1c65e1dc6e4af6733ae00e152b21997c25a",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_drpa8_full_data/full_data_train_cases.csv": "1e3a325a8aea6fb384c97135403297317c5c13a566cda774a5b5bbcf51a53373",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_drpa8_pilot/crop_spec.json": "23f4c775ec2178f0fc46573e154c2a9da8c5f7afb57d6d8bfdeae6fc554b816d",
+    "__DRPA_WORKSPACE__/quality_audit/same_gpu_resource_benchmark.py": "80aba2a7e3b404c9f3d79655df218aaa05a161dc2a1cd5248de9bcae2cb07ca2",
+    "__DRPA_WORKSPACE__/scripts/fullft/fullft_runtime_gate.py": "8b53a85e19f4952d7343d08e796ac8f4d9b00a8a275d6f25300d7df0b363c67d",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_peft/voxtell_peft_wrapper.py": "c55b1a20c739d27810148c25d4c4a2ee8c1721eb8335fae6729ad812971e54bb",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_b1_bilateral_crop/b1_preprocessing.py": "0f42835b69ea3e23c242bb23925905d9a9b7f5e60ded737823d5b97e04f9c315",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_drpa8_pilot/drpa8_wrapper.py": "5e85e35e6b5b6c3ccbfcf3c3de18c34fb1dc31fc96a8a56954a3187e41d7f6ab",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_full_data_b3_vs_drpa_efficiency/b3_full_data_wrapper.py": "0b49bb178d5c370b2f458a977274bba06564695f729dbc693f69ef80d27ba763",
+    "__DRPA_WORKSPACE__/quality_audit/voxtell_mtl_b3_decoder_capacity_upper_bound/voxtell_decoder_capacity_wrapper.py": "fe4d879a316b892f83cafc8d0c3f96ac5bc0d42eaff318df9b7a0cae2eb2673d",
+    "__DRPA_WORKSPACE__/VoxTell/voxtell/model/voxtell_model.py": "6c1b057e7d8750f4d4c5349fbebf8d785f40e6c1f49d971c0379c24282d72b64",
+    "__DRPA_WORKSPACE__/scripts/analysis/benchmark_x3.py": "731c8ebf3ad9c35cc9d6e0bbe2f7c08daa07bd65b4580071c281a8dcab3b7bcd",
+    "__DRPA_DATA_ROOT__/Task003_MTL/imagesTr/PRIVATE_SUBJECT_001_bl_CN_0000.nii.gz": "cc9d530e3e52398ece148441aece35b56b723f90331513ae4f6ca55480317622",
+    "__DRPA_DATA_ROOT__/Task003_MTL/labelsTr/PRIVATE_SUBJECT_001_bl_CN.nii.gz": "c57f324a028c200e55f628fe91c9ff808b36a74f95c4b5890d20943aff17379d"
+  }
+}

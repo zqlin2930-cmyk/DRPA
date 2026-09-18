@@ -1,0 +1,2 @@
+case_id,ptid,image_path,label_path
+synthetic001_visit01,synthetic001,/private/data/synthetic001/image.nii.gz,/private/data/synthetic001/label.nii.gz

@@ -1,0 +1,19 @@
+# Observed tested source-runtime versions; install an appropriate torch CUDA wheel separately.
+torch==2.8.0
+numpy==2.4.6
+scipy==1.17.1
+pandas==3.0.5
+nibabel==5.4.2
+SimpleITK==2.5.6
+nnunetv2==2.8.1
+dynamic-network-architectures==0.4.4
+acvl-utils==0.2.6
+einops==0.8.2
+positional-encodings==6.0.3
+transformers==4.57.6
+huggingface-hub==0.36.2
+matplotlib==3.11.1
+psutil==7.0.0
+scikit-learn==1.9.0
+PyYAML==6.0.3
+threadpoolctl==3.6.0
